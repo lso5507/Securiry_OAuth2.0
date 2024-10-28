@@ -41,7 +41,7 @@ public class OAuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2
 			.getUserNameAttributeName(); // OAuth 로그인 시 키(pk)가 되는 값
 		Map<String, Object> attributes = oAuth2User.getAttributes(); // OAuth 서비스의 유저 정보들
 
-			UserProfile userProfile = OAuthAttributes.extract(registrationId, attributes); // registrationId에 따라 유저 정보를 통해 공통된 UserProfile 객체로 만들어 줌
+		UserProfile userProfile = OAuthAttributes.extract(registrationId, attributes); // registrationId에 따라 유저 정보를 통해 공통된 UserProfile 객체로 만들어 줌
 		userProfile.setProvider(registrationId);
 		User user = saveOrUpdate(userProfile);
 
