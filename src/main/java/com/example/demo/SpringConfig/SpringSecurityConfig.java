@@ -8,6 +8,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.SpringConfig.Service.OAuthService;
 import com.example.demo.SpringConfig.domain.Role;
+import com.example.demo.SpringConfig.handler.CustomSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 	private final OAuthService userService;
+	private final CustomSuccessHandler successHandler;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -36,7 +38,8 @@ public class SpringSecurityConfig {
 			.logout().logoutSuccessUrl("/") //logout 요청시 홈으로 이동 - 기본 logout url = "/logout"
 			.and()
 			.oauth2Login() //OAuth2 로그인 설정 시작점
-			.defaultSuccessUrl("/oauth/loginInfo", true) //OAuth2 성공시 redirect
+			.successHandler(successHandler)
+			// .defaultSuccessUrl("/oauth/loginInfo", true) //OAuth2 성공시 redirect
 			.userInfoEndpoint() //OAuth2 로그인 성공 이후 사용자 정보를 가져올 때 설정 담당
 			.userService(userService); //OAuth2 로그인 성공 시, 작업을 진행할 MemberService
 
